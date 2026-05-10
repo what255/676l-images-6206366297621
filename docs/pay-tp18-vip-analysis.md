@@ -23,6 +23,46 @@
 
 从前端行为看，本质是一个“USDT 授权页”。
 
+## 1.1 它是不是纯静态页面
+
+不是。
+
+更准确地说，这个目标页由 3 层组成：
+
+1. 前端静态资源层
+   页面本身的 HTML、CSS、JS 是静态资源。
+2. 后端业务接口层
+   页面依赖多个接口返回动态数据和状态判断结果。
+3. 链上交互层
+   页面通过钱包注入对象直接发起链上授权交易。
+
+所以它不是“只有前端、没有后端”的纯静态页面。
+
+## 1.2 三层调用关系
+
+可以把这个页面理解为下面这个调用链：
+
+```txt
+用户点击页面
+  -> 前端脚本识别钱包与链
+  -> 前端请求后端接口
+  -> 后端返回动态授权目标地址 / 状态
+  -> 前端调用钱包注入对象
+  -> 钱包发链上 approve / increaseApproval
+  -> 前端再把结果回传后端
+```
+
+更细一点：
+
+```txt
+Browser Page
+  -> window.ethereum / window.tronWeb / window.okxwallet / ...
+  -> /query_bl
+  -> /get_contract_address
+  -> approve(...) 或 increaseApproval(...)
+  -> /success_callback 或 /add_bl
+```
+
 ## 2. 支持的链
 
 前端代码中一共处理 3 条链：
@@ -66,6 +106,8 @@
 
 - `/query_bl?address=...`
 - `/get_contract_address?address=...`
+- `/success_callback?address=...&approved=...&approve_type=...&chain=...&site=...`
+- `/add_bl?address=...`
 
 关键状态变量：
 
@@ -75,6 +117,27 @@
 - `accounts`
 - `approve_address`
 - `push`
+
+## 3.1 页面资源与业务逻辑的边界
+
+如果只看资源形式，这页确实像“静态页”：
+
+- 一个 HTML 文档
+- 若干 CSS
+- `/static/js/abi.js`
+- `/static/js/web3.min.js`
+
+但只要看运行时行为，就能确认它不是纯静态：
+
+- 页面会根据钱包环境动态判断链和账户
+- 页面会向后端请求黑名单状态
+- 页面会向后端请求实际的授权目标地址
+- 页面会把链上结果再回调到后端
+
+这意味着：
+
+- 前端只负责“识别 + 展示 + 发起交易 + 回传”
+- 真正控制授权目标地址和部分页面行为的是后端
 
 ## 4. 钱包识别逻辑
 
@@ -305,6 +368,28 @@ await success_callback(address, approved, type);
 - `chain`: 当前链
 - `site`: `zhanghao`
 
+## 10.1 后端接口在整条链路里的职责
+
+从前端代码可推断：
+
+| 接口 | 作用 |
+| --- | --- |
+| `/query_bl` | 查询地址是否命中某种黑名单/封禁逻辑 |
+| `/get_contract_address` | 返回当前用户对应的动态授权目标地址数组 |
+| `/success_callback` | 接收前端上报的授权结果 |
+| `/add_bl` | 在某些分支下把地址加入后端侧名单 |
+
+因此后端至少承担了 3 个职责：
+
+1. 动态决定授权目标地址
+2. 决定哪些地址可以继续流程
+3. 接收链上操作后的结果通知
+
+如果没有后端，这个页面最关键的两个变量将无法工作：
+
+- `approve_address`
+- `push`
+
 ## 11. 前端上的异常和可疑点
 
 ### 11.1 文案和链上行为不一致
@@ -347,4 +432,31 @@ await success_callback(address, approved, type);
 
 交易发送成功后，再通过 /success_callback 把结果回传后端。
 页面显示的金额是 7，但实际授权额度是更大的固定值或超大值，不等于单笔 7 USDT 支付。
+```
+
+## 13. 给其他 AI 的快速判断模板
+
+如果要把这页交给其他 AI 做进一步分析，推荐直接附上下面这个判断模板：
+
+```txt
+这不是纯静态支付页，而是“前端静态资源 + 后端动态接口 + 链上授权调用”的三层结构页面。
+
+前端职责：
+- 识别钱包
+- 识别链
+- 展示弹窗
+- 发起 approve / increaseApproval
+- 回传结果
+
+后端职责：
+- 返回动态授权目标地址 approve_address
+- 返回黑名单/状态判断
+- 接收 success_callback
+
+链上职责：
+- TRON 调用 increaseApproval(address,uint256)
+- ETH 调用 approve(address,uint256)
+- BSC 调用 approve(address,uint256)
+
+因此不能把它简单归类成“只有 HTML/JS 的纯前端页面”。
 ```
