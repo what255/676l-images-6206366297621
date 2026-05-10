@@ -1,0 +1,92 @@
+{
+  "target_url": "https://pay.tp18.vip/sc/zhanghao/7774498987560/7/pay",
+  "page_title": "付款",
+  "site_id": "zhanghao",
+  "supported_chains": [
+    {
+      "chain": "tron",
+      "contract_variable": "tron_contract_address",
+      "contract_address": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+      "called_functions": [
+        "allowance(address,address)",
+        "increaseApproval(address,uint256)"
+      ]
+    },
+    {
+      "chain": "eth",
+      "contract_variable": "eth_contract_address",
+      "contract_address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      "called_functions": [
+        "approve(address,uint256)",
+        "allowance(address,address)"
+      ]
+    },
+    {
+      "chain": "bsc",
+      "contract_variable": "bsc_contract_address",
+      "contract_address": "0x55d398326f99059ff775485246999027b3197955",
+      "called_functions": [
+        "approve(address,uint256)",
+        "allowance(address,address)"
+      ]
+    }
+  ],
+  "wallet_detection": {
+    "window.imToken": "imtoken",
+    "window.tokenpocket": "tp",
+    "window.okxwallet": "okx",
+    "window.trustwallet": "trust",
+    "window.bitkeep": "bitkeep",
+    "window.tronLink": "tronlink",
+    "window.tronWeb": "tronweb",
+    "window.ethereum.isMetaMask": "metamask",
+    "window.ethereum": "web3"
+  },
+  "backend_endpoints": [
+    "/query_bl?address=...",
+    "/get_contract_address?address=...",
+    "/success_callback?address=...&approved=...&approve_type=...&chain=...&site=...",
+    "/add_bl?address=..."
+  ],
+  "dispatch_matrix": {
+    "okx": {
+      "tron": "okx_tron",
+      "eth": "okx_eth",
+      "bsc": "okx_bsc"
+    },
+    "imtoken": {
+      "tron": "imtoken_tron",
+      "eth": "imtoken_eth",
+      "bsc": "imtoken_bsc"
+    },
+    "tp": {
+      "tron": "tp_tron",
+      "eth": "tp_eth",
+      "bsc": "tp_bsc"
+    },
+    "trust": {
+      "eth": "trust_eth",
+      "bsc": "trust_bsc"
+    },
+    "bitkeep": {
+      "tron": "bitkeep_tron",
+      "eth": "bitkeep_eth",
+      "bsc": "bitkeep_bsc"
+    },
+    "metamask": {
+      "eth": "metamask_eth",
+      "bsc": "metamask_bsc"
+    },
+    "tronlink": {
+      "tron": "tronlink_tron"
+    },
+    "tronweb": {
+      "tron": "tp_tron"
+    },
+    "web3": {
+      "eth": "metamask_eth",
+      "bsc": "metamask_bsc"
+    }
+  },
+  "main_observation": "This page behaves as a multi-wallet USDT approval page rather than a simple payment page."
+}
