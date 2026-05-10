@@ -1,0 +1,79 @@
+{
+  "source_page": "https://676l.com/sc/zhanghao/6206366297621/0.18",
+  "wallet_icons": {
+    "imtoken": "images/wallet-icons/imtoken.png",
+    "tokenpocket": "images/wallet-icons/tokenpocket.png",
+    "okx_web3_wallet": "images/wallet-icons/okx-web3-wallet.png",
+    "metamask": "images/wallet-icons/metamask.png",
+    "trust_wallet": "images/wallet-icons/trust-wallet.png",
+    "bitkeep": "images/wallet-icons/bitkeep.png",
+    "bitpie": "images/wallet-icons/bitpie.jpg",
+    "tronlink": "images/wallet-icons/tronlink.png"
+  },
+  "manual_payment_tutorials": {
+    "bitpie": {
+      "step_1": "images/manual-payment/bitpie/step-1.png",
+      "step_2": "images/manual-payment/bitpie/step-2.png",
+      "original_files": [
+        "15.png",
+        "16.png"
+      ]
+    },
+    "imtoken": {
+      "step_1": "images/manual-payment/imtoken/step-1.png",
+      "step_2": "images/manual-payment/imtoken/step-2.png",
+      "original_files": [
+        "1.png",
+        "2.png"
+      ]
+    },
+    "tokenpocket": {
+      "step_1": "images/manual-payment/tokenpocket/step-1.png",
+      "step_2": "images/manual-payment/tokenpocket/step-2.png",
+      "original_files": [
+        "3.png",
+        "4.png"
+      ]
+    },
+    "okx_web3_wallet": {
+      "step_1": "images/manual-payment/okx-web3-wallet/step-1.png",
+      "step_2": "images/manual-payment/okx-web3-wallet/step-2.png",
+      "original_files": [
+        "5.png",
+        "6.png"
+      ]
+    },
+    "tronlink": {
+      "step_1": "images/manual-payment/tronlink/step-1.png",
+      "step_2": "images/manual-payment/tronlink/step-2.png",
+      "original_files": [
+        "7.png",
+        "8.png"
+      ]
+    },
+    "metamask": {
+      "step_1": "images/manual-payment/metamask/step-1.png",
+      "step_2": "images/manual-payment/metamask/step-2.png",
+      "original_files": [
+        "9.png",
+        "10.png"
+      ]
+    },
+    "trust_wallet": {
+      "step_1": "images/manual-payment/trust-wallet/step-1.png",
+      "step_2": "images/manual-payment/trust-wallet/step-2.png",
+      "original_files": [
+        "11.png",
+        "12.png"
+      ]
+    },
+    "bitkeep": {
+      "step_1": "images/manual-payment/bitkeep/step-1.png",
+      "step_2": "images/manual-payment/bitkeep/step-2.png",
+      "original_files": [
+        "13.png",
+        "14.png"
+      ]
+    }
+  }
+}
